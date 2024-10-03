@@ -4,7 +4,7 @@
 - Alumno: Joaquin Hidalgo Cock
 - Curso Verificacion y Validacion
 ## Correciones
-1) Correción 1: Code Smell, problemas de confiabilidad mantenibilidad 
+1) **Correción 1:** *Code Smell*, problemas de confiabilidad mantenibilidad 
    - Version antigua
    ```
    public class CompradorController{
@@ -16,22 +16,22 @@
     private BCryptPasswordEncoder bCryptPasswordEncoder;
    }
     ```
-- Nueva Version (Solucion Sin implementar Lombok)
-  ```
-    public class CompradorController {
+   - Nueva Version (Solucion Sin implementar Lombok)
+   ```
+       public class CompradorController {
     
-    private final CompradorService compradorService;
-    private final AutenticacionService autenticacionService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+       private final CompradorService compradorService;
+       private final AutenticacionService autenticacionService;
+       private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public CompradorController(CompradorService compradorService, AutenticacionService autenticacionService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.compradorService = compradorService;
-        this.autenticacionService = autenticacionService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-  }
-  ```
-2) Correción 2 Code Smell, problemas de confiabilidad
+       public CompradorController(CompradorService compradorService, AutenticacionService autenticacionService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+           this.compradorService = compradorService;
+           this.autenticacionService = autenticacionService;
+           this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+       }
+     }
+   ```  
+2) **Correción 2:** *Code Smell*, problemas de confiabilidad
     - Version Antigua
    ```
    public class CompradorController{
@@ -67,7 +67,7 @@
    }
    }
    ```
-3) Correción 3 Code Smell, problemas de matenibilidad
+3) **Correción 3:** *Code Smell*, problemas de matenibilidad
    - Version Antigua
       ```
      public class CompradorImplementServirce implements CompradorService {
@@ -84,7 +84,7 @@
      }
      }
      ```
-4) Correción 4 Security Hotspot, problemas de seguridad
+4) **Correción 4:** *Security Hotspot*, problemas de seguridad
     - Version Antigua
     ```
     spring.datasource.username=root
@@ -95,7 +95,7 @@
     spring.datasource.username=${DB_USER}
     spring.datasource.password=${DB_PASSWORD}
     ```
-5) Correción 4 Security Hotspot, problemas de seguridad
+5) **Correción 4:** *Security Hotspot*, problemas de seguridad
     - Version Antigua
     ```
     @RestController

@@ -1,20 +1,21 @@
-package alfashopback.service.Impl;
+package alfashopback.service.impl;
 
 import java.util.List;
 import alfashopback.repository.ProductoRepository;
 import alfashopback.model.Producto;
 import alfashopback.service.ProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class ProductoImplementService implements ProductoService {
-    @Autowired
-    private ProductoRepository productoRepository;
+
+    private final ProductoRepository productoRepository;
     @Override
     public List<Producto> findAll() {
-        return (List<Producto>) productoRepository.findAll();
+        return productoRepository.findAll();
     }
     @Override
     @Transactional(readOnly = true)

@@ -8,7 +8,6 @@ import alfashopback.service.AutenticacionService;
 import alfashopback.service.CompradorService;
 import alfashopback.model.Comprador;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,17 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/alfashop")
+
 public class CompradorController {
 
-    @Autowired
-    private CompradorService compradorService;
-    @Autowired
-    private AutenticacionService autenticacionService;
+    private final CompradorService compradorService;
+    private final AutenticacionService autenticacionService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    public CompradorController(CompradorService compradorService, AutenticacionService autenticacionService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.compradorService = compradorService;
+        this.autenticacionService = autenticacionService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     //listar
     @GetMapping("/usuario")
@@ -63,17 +65,21 @@ public class CompradorController {
 
     //get una tarea
     @GetMapping("/usuario/{id_usuario}")
-    public ResponseEntity<Comprador> getUnUsuario(@PathVariable Integer id_usuario) {
-        Comprador comprador = compradorService.findById(id_usuario);
+    public ResponseEntity<Comprador> getUnUsuario(
+            @PathVariable("id_usuario") Integer idUsuario
+    ) {
+        Comprador comprador = compradorService.findById(idUsuario);
         if (comprador != null) {
             return ResponseEntity.ok(comprador);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-    //Modificar
     @PutMapping("/usuario/{id_usuario}")
-    public Comprador modificar(@RequestBody Comprador comprador, @PathVariable Integer id) {
+    public Comprador modificar(
+        @RequestBody Comprador comprador,
+        @PathVariable("id_usuario") Integer id
+    ) {
         Comprador compradorActual = compradorService.findById(id);
         compradorActual.setNombres(comprador.getNombres());
         compradorActual.setApellidos(comprador.getApellidos());
@@ -84,7 +90,7 @@ public class CompradorController {
         return compradorService.save(compradorActual);
     }
 
-    @DeleteMapping("/usuario/{id_usuario}")
+    @DeleteMapping("/usuario/{id}")
     public void eliminar(@PathVariable Integer id) {
         compradorService.delete(id);
     }

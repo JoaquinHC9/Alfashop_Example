@@ -1,16 +1,17 @@
-package alfashopback.service.Impl;
+package alfashopback.service.impl;
 
 import alfashopback.repository.CarritoRepository;
 import alfashopback.model.Carrito;
 import alfashopback.service.CarritoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class CarritoImplementService implements CarritoService {
-    @Autowired
-    private CarritoRepository carritoRepository;
+
+    private final CarritoRepository carritoRepository;
     @Override
     @Transactional(readOnly = true)
     public Carrito findById(Integer id) {

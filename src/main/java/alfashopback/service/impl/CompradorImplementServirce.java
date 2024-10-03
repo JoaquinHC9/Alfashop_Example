@@ -1,22 +1,22 @@
-package alfashopback.service.Impl;
+package alfashopback.service.impl;
 
 import java.util.List;
 import alfashopback.repository.CompradorRepository;
 import alfashopback.model.Comprador;
 import alfashopback.service.CompradorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class CompradorImplementServirce implements CompradorService {
     
-    @Autowired
-    private CompradorRepository compradorRepository;
+    private final CompradorRepository compradorRepository;
 
     @Override
     public List<Comprador> findAll() {
-        return (List<Comprador>) compradorRepository.findAll();
+        return compradorRepository.findAll();
     }
 
     @Override

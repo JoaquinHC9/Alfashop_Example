@@ -6,7 +6,7 @@ import alfashopback.model.Categoria;
 import alfashopback.service.CategoriaService;
 import alfashopback.service.ProductoService;
 import alfashopback.model.Producto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/alfashop")
+@AllArgsConstructor
 public class ProductoController {
 
-    @Autowired
-    private ProductoService productoService;
-    @Autowired
-    private CategoriaService categoriaService;
+    private final ProductoService productoService;
+
+    private final CategoriaService categoriaService;
 
     //listar
     @GetMapping("/producto")

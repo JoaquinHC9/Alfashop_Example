@@ -20,51 +20,53 @@
    ```
        public class CompradorController {
     
-       private final CompradorService compradorService;
-       private final AutenticacionService autenticacionService;
-       private final BCryptPasswordEncoder bCryptPasswordEncoder;
+        private final CompradorService compradorService;
+        private final AutenticacionService autenticacionService;
+        private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-       public CompradorController(CompradorService compradorService, AutenticacionService autenticacionService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-           this.compradorService = compradorService;
-           this.autenticacionService = autenticacionService;
-           this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-       }
+        public CompradorController(CompradorService compradorService, AutenticacionService autenticacionService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+            this.compradorService = compradorService;
+            this.autenticacionService = autenticacionService;
+            this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        }
      }
    ```  
 2) **Correción 2:** *Code Smell*, problemas de confiabilidad
     - Version Antigua
    ```
    public class CompradorController{
-   @PutMapping("/usuario/{id_usuario}")
-   public Comprador modificar(@RequestBody Comprador comprador, @PathVariable Integer id) {
-   Comprador compradorActual = compradorService.findById(id);
-   compradorActual.setNombres(comprador.getNombres());
-   compradorActual.setApellidos(comprador.getApellidos());
-   compradorActual.setTelefono(comprador.getTelefono());
-   compradorActual.setCorreo(comprador.getCorreo());
-   compradorActual.setContrasenia(comprador.getContrasenia());
-   compradorActual.setFechaNacimiento(comprador.getFechaNacimiento());
-   return compradorService.save(compradorActual);
-   }
+    @PutMapping("/usuario/{id_usuario}")
+    public Comprador modificar(@RequestBody Comprador comprador, @PathVariable Integer id) {
+      Comprador compradorActual = compradorService.findById(id);
+      compradorActual.setNombres(comprador.getNombres());
+      compradorActual.setApellidos(comprador.getApellidos());
+      compradorActual.setTelefono(comprador.getTelefono());
+      compradorActual.setCorreo(comprador.getCorreo());
+      compradorActual.setContrasenia(comprador.getContrasenia());
+      compradorActual.setFechaNacimiento(comprador.getFechaNacimiento());
+
+      return compradorService.save(compradorActual);
+    }
    }
    ```
    - Version Nueva
    ```
    public class CompradorController{
-   @PutMapping("/usuario/{id_usuario}")
-   public Comprador modificar(
-   @RequestBody Comprador comprador,
-   @PathVariable("id_usuario") Integer id
-   ) {
-   Comprador compradorActual = compradorService.findById(id);
-   compradorActual.setNombres(comprador.getNombres());
-   compradorActual.setApellidos(comprador.getApellidos());
-   compradorActual.setTelefono(comprador.getTelefono());
-   compradorActual.setCorreo(comprador.getCorreo());
-   compradorActual.setContrasenia(comprador.getContrasenia());
-   compradorActual.setFechaNacimiento(comprador.getFechaNacimiento());
-   return compradorService.save(compradorActual);
-   }
+    @PutMapping("/usuario/{id_usuario}")
+    public Comprador modificar(
+      @RequestBody Comprador comprador,
+      @PathVariable("id_usuario") Integer id
+    ) {
+      Comprador compradorActual = compradorService.findById(id);
+      compradorActual.setNombres(comprador.getNombres());
+      compradorActual.setApellidos(comprador.getApellidos());
+      compradorActual.setTelefono(comprador.getTelefono());
+      compradorActual.setCorreo(comprador.getCorreo());
+      compradorActual.setContrasenia(comprador.getContrasenia());
+      compradorActual.setFechaNacimiento(comprador.getFechaNacimiento());
+      
+      return compradorService.save(compradorActual);
+    }
    }
    ```
 3) **Correción 3:** *Code Smell*, problemas de matenibilidad
@@ -72,16 +74,16 @@
       ```
      public class CompradorImplementServirce implements CompradorService {
       public List<Comprador> findAll() {
-      return (List<Comprador>) compradorRepository.findAll();
+        return (List<Comprador>) compradorRepository.findAll();
       }
      }
      ```
    - Version Nueva
      ```
      public class CompradorImplementServirce implements CompradorService {
-     public List<Comprador> findAll() {
-     return compradorRepository.findAll();
-     }
+      public List<Comprador> findAll() {
+        return compradorRepository.findAll();
+      }
      }
      ```
 4) **Correción 4:** *Security Hotspot*, problemas de seguridad
